@@ -11,26 +11,7 @@
     margin: 0 auto;
 }
 
-.header {
-    grid-area: header;
-    background-color: rosybrown;
-}
 
-.nav {
-    grid-area: nav;
-    background-color: cadetblue;
-}
 
-.content {
-    grid-area: content;
-    background-color: aqua;
-}
 
-.header img {
-    width: 40px;
-}
 
-.imgContent {
-    width: 350px;
-height: 140px;
-}

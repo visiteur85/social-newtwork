@@ -1,0 +1,13 @@
+.nav {
+    grid-area: nav;
+    background-color: cadetblue;
+}
+
+.item {
+    color: white;
+    text-decoration: none;
+}
+
+ .active {
+    color:goldenrod;
+}
