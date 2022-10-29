@@ -1,5 +1,4 @@
 import React from 'react';
-import s from '../MyPosts/MyPosts.module.css'
 import {Post} from "./Post/Post";
 
 export const MyPosts = () => {
@@ -10,7 +9,9 @@ export const MyPosts = () => {
                 <button>add post</button>
             </div>
             <div>
-               <Post/>
+                <Post message={'Hi, how are you'}/>
+                <Post message={'it s my first post'}/>
+
 
             </div>
         </div>
