@@ -11,6 +11,13 @@
     margin: 0 auto;
 }
 
+.app-wrapper-content {
+
+    grid-area: content;
+    background-color: aqua;
+
+}
+
 
 
 

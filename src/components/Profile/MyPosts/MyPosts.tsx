@@ -11,8 +11,6 @@ export const MyPosts = () => {
             <div>
                 <Post message={'Hi, how are you'}/>
                 <Post message={'it s my first post'}/>
-
-
             </div>
         </div>
     );
