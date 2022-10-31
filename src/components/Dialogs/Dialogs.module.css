@@ -10,6 +10,8 @@
 
 
 .dialog {
+    color: white;
+    text-decoration: none;
 
 }
 
@@ -19,4 +21,8 @@
 
 .message {
 
+}
+
+.active {
+    color:goldenrod;
 }
