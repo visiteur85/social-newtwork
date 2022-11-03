@@ -6,6 +6,14 @@ export type DialogItemPropsTime = {
     name: string
     id: string
 }
+export type DialogsDataType = {
+    id:string
+    name:string
+}
+export type MessagesDataType = {
+    id:string
+    message:string
+}
 
 const DialogItem = (props: DialogItemPropsTime) => {
     return (
@@ -30,29 +38,27 @@ const Message = (props: MessageType) => {
 
 export const Dialogs = () => {
 
-    const dialogsData = [
+    const dialogsData: DialogsDataType[] = [
         {id: "1", name: "Pavel"},
         {id: "3", name: "Andrew"},
         {id: "3", name: "Dima"},
         {id: "4", name: "Vlad"},
     ]
 
-    const messagesData = [
-        {id:"1", message: "Hi"},
-        {id:"2", message: "How are you"},
-        {id:"3", message: "Yo"},
+    const messagesData: MessagesDataType[] = [
+        {id: "1", message: "Hi"},
+        {id: "2", message: "How are you"},
+        {id: "3", message: "Yo"},
     ]
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
-                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id}/>
-                <DialogItem name={dialogsData[1].name} id={dialogsData[1].id}/>
+                {dialogsData.map((d) => <DialogItem key={d.id} name={d.name} id={d.id}/>)}
+
 
             </div>
             <div className={s.messages}>
-                <Message message={messagesData[0].message}/>
-                <Message message={messagesData[1].message}/>
-                <Message message={messagesData[2].message}/>
+                {messagesData.map((m) => <Message key={m.id} message={m.message}/>)}
 
             </div>
 
