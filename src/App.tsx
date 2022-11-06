@@ -14,6 +14,7 @@ import {RootStateType} from "./redux/state";
 
 export type AppPropsType = {
 state: RootStateType
+    addPost:(newPost:string)=>void
 
 }
 
@@ -27,7 +28,7 @@ const App = (props: AppPropsType) => {
                 <Routes>
                     {/*в начале мы попадаем на страницу '/' и переходим сразу на страницу profile*/}
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile posts={props.state.profilePage}/>}/>
+                    <Route path={'/profile'} element={<Profile posts={props.state.profilePage} addPost={props.addPost}/>}/>
                     <Route path={'/dialogs'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages}/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>

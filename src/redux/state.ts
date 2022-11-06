@@ -40,8 +40,8 @@ export let state: RootStateType = {
         posts: [
             {id: 1, message: "Hi, how are you", likesCount: 0},
             {id: 2, message: "it's my first post", likesCount: 23},
-            {id: 2, message: "I m ok", likesCount: 14},
-            {id: 2, message: "Great", likesCount: 43}
+            {id: 3, message: "I m ok", likesCount: 14},
+            {id: 4, message: "Great", likesCount: 43}
         ]
     },
     dialogsPage: {
@@ -61,4 +61,9 @@ export let state: RootStateType = {
     },
     sidebar: {}
 
+};
+
+export const addPost = (postMessage: string) => {
+    let newPost: PostPropsType = {id: 5, message: postMessage, likesCount: 0}
+    state.profilePage.posts.push(newPost)
 }
