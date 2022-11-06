@@ -4,21 +4,27 @@ import s from '../MyPosts/MyPosts.module.css'
 import {PostPropsType} from "../../../redux/state";
 
 
-
 export type MyPostPropsType = {
-   posts:Array<PostPropsType>
+    posts: Array<PostPropsType>
 }
-export const MyPosts = (props:MyPostPropsType) => {
+export const MyPosts = (props: MyPostPropsType) => {
+
+    const addPost = () => {
+        let text = newPostElement.current.value;
+        alert(text)
+    }
+
+    let newPostElement: any = React.createRef()
 
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea></textarea>
+                    <textarea ref={newPostElement}></textarea>
                 </div>
                 <div>
-                    <button>add post</button>
+                    <button onClick={addPost}>add post</button>
                 </div>
             </div>
             <div>
