@@ -6,16 +6,21 @@ import {PostPropsType} from "../../../redux/state";
 
 export type MyPostPropsType = {
     posts: Array<PostPropsType>
-    addPost:(newPost:string)=>void
+    addPost: (newPost: string) => void
 }
 export const MyPosts = (props: MyPostPropsType) => {
+    let newPostElement: any = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
-        let text = newPostElement.current.value;
-       props.addPost(text)
+
+        if (newPostElement.current) {
+            let text = newPostElement.current.value;
+            props.addPost(text)
+            newPostElement.current.value = ""
+        }
     }
 
-    let newPostElement: any = React.createRef()
+
 
     return (
         <div className={s.postsBlock}>

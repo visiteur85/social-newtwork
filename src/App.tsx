@@ -13,8 +13,8 @@ import {RootStateType} from "./redux/state";
 
 
 export type AppPropsType = {
-state: RootStateType
-    addPost:(newPost:string)=>void
+    state: RootStateType
+    addPost: (newPost: string) => void
 
 }
 
@@ -26,10 +26,13 @@ const App = (props: AppPropsType) => {
             <NavBar/>
             <div className='app-wrapper-content'>
                 <Routes>
+
                     {/*в начале мы попадаем на страницу '/' и переходим сразу на страницу profile*/}
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                    <Route path={'/profile'} element={<Profile posts={props.state.profilePage} addPost={props.addPost}/>}/>
-                    <Route path={'/dialogs'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs} messages={props.state.dialogsPage.messages}/>}/>
+                    <Route path={'/profile'}
+                           element={<Profile posts={props.state.profilePage} addPost={props.addPost}/>}/>
+                    <Route path={'/dialogs'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs}
+                                                               messages={props.state.dialogsPage.messages}/>}/>
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>
