@@ -11,7 +11,7 @@ import App from "./App";
 const container = document.getElementById('root');
 const root = ReactDOM.createRoot(container as HTMLElement);
 
-export const renderTree = () => {
+export const renderTree = (state:RootStateType) => {
     // createRoot(container!) if you use TypeScript
 
 
@@ -22,5 +22,5 @@ export const renderTree = () => {
         ,
     );
 }
-renderTree()
+renderTree(state)
 subscribe(renderTree)

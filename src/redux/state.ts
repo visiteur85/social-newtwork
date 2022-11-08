@@ -69,16 +69,16 @@ export const addPost = () => {
     let newPost: PostPropsType = {id: 5, message: state.profilePage.newPostText, likesCount: 0}
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ""
-    renderTree()
+    renderTree(state)
 
 }
 
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
-    renderTree()
+    renderTree(state)
 
 }
-let renderTree = () => {
+let renderTree = (state:RootStateType) => {
     console.log(123)
 }
 export const subscribe = (observer: any) => {
