@@ -1,5 +1,3 @@
-import {renderTree} from "../render";
-
 export type PostPropsType = {
     id: number
     message: string
@@ -71,12 +69,19 @@ export const addPost = () => {
     let newPost: PostPropsType = {id: 5, message: state.profilePage.newPostText, likesCount: 0}
     state.profilePage.posts.push(newPost)
     state.profilePage.newPostText = ""
-    renderTree(state)
+    renderTree()
 
 }
 
 export const updateNewPostText = (newText: string) => {
     state.profilePage.newPostText = newText
-    renderTree(state)
+    renderTree()
 
 }
+let renderTree = () => {
+    console.log(123)
+}
+export const subscribe = (observer: any) => {
+    renderTree = observer
+}
+
