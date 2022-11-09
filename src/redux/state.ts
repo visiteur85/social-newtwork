@@ -37,6 +37,7 @@ export type RootStateType = {
 }
 
 export type AddPostActionType = {
+
     type: "ADD-POST"
 };
 export type UpdateNewPostTextActionType = {
@@ -45,6 +46,18 @@ export type UpdateNewPostTextActionType = {
 
 };
 export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
+export const addPostActionCreator = (): AddPostActionType => {
+    return {
+        type: "ADD-POST"
+    } as const
+};
+
+export let updateNewPostActionCreator = (text: string): UpdateNewPostTextActionType => {
+    return {
+        type: "UPDATE-NEW-POST",
+        newText: text
+    } as const
+};
 export type StoreType = {
     _state: RootStateType
     _onChange: (state: RootStateType) => void
