@@ -36,13 +36,21 @@ export type RootStateType = {
 
 }
 
+export type AddPostActionType = {
+    type: "ADD-POST"
+};
+export type UpdateNewPostTextActionType = {
+    type: "UPDATE-NEW-POST"
+    newText: string
+
+};
+export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
 export type StoreType = {
     _state: RootStateType
-    updateNewPostText: (newText: string) => void
-    addPost: () => void
     _onChange: (state: RootStateType) => void
     subscribe: (callback: (_state: RootStateType) => void) => void
     getState: () => RootStateType
+    dispatch: (action: ActionsType) => void
 
 
 }
@@ -76,19 +84,7 @@ export let store: StoreType = {
         },
         sidebar: {},
     },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText;
-        //this._onChange()
-        this._onChange(this._state)
-    },
-    addPost() {
-        let newPost: PostPropsType = {id: 5, message: this._state.profilePage.newPostText, likesCount: 15};
 
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = ""
-        //this._onChange()
-        this._onChange(this._state)
-    },
     getState() {
         return this._state
     },
@@ -97,5 +93,17 @@ export let store: StoreType = {
     },
     subscribe(callback) {
         this._onChange = callback
+    },
+    dispatch(action) {
+        if (action.type === "ADD-POST") {
+            let newPost: PostPropsType = {id: 5, message: this._state.profilePage.newPostText, likesCount: 15};
+
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = ""
+            this._onChange(this._state);
+        } else if (action.type === "UPDATE-NEW-POST") {
+            this._state.profilePage.newPostText = action.newText;
+            this._onChange(this._state)
+        }
     },
 }

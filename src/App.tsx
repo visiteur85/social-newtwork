@@ -9,13 +9,12 @@ import {News} from "./components/News/News";
 import {IAm404} from "./components/404/IAm404";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {RootStateType} from "./redux/state";
+import {ActionsType, RootStateType} from "./redux/state";
 
 
 export type AppPropsType = {
     state: RootStateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
+    dispatch: (action: ActionsType) => void
 
 }
 
@@ -32,8 +31,9 @@ const App = (props: AppPropsType) => {
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
                     <Route path={'/profile'}
                            element={<Profile profilePage={props.state.profilePage}
-                                             addPost={props.addPost}
-                                             updateNewPostText={props.updateNewPostText}
+                                             dispatch={props.dispatch}
+
+
                            />}/>
                     <Route path={'/dialogs'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs}
                                                                messages={props.state.dialogsPage.messages}/>}/>
