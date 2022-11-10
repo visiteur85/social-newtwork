@@ -9,12 +9,13 @@ import {News} from "./components/News/News";
 import {IAm404} from "./components/404/IAm404";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionsType, RootStateType} from "./redux/state";
+import {ActionsType, RootStateType, StoreType} from "./redux/state";
 
 
 export type AppPropsType = {
     state: RootStateType
     dispatch: (action: ActionsType) => void
+    store: StoreType
 
 }
 
@@ -32,11 +33,10 @@ const App = (props: AppPropsType) => {
                     <Route path={'/profile'}
                            element={<Profile profilePage={props.state.profilePage}
                                              dispatch={props.dispatch}
-
-
                            />}/>
-                    <Route path={'/dialogs'} element={<Dialogs dialogs={props.state.dialogsPage.dialogs}
-                                                               messages={props.state.dialogsPage.messages}/>}/>
+                    <Route path={"/dialogs"} element={<Dialogs
+                        store={props.store}/>}
+                    />
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>
                     <Route path={'/settings'} element={<Settings/>}/>

@@ -25,6 +25,7 @@ export type ProfilePageType = {
 export type DialogPageType = {
     dialogs: Array<DialogPropsType>
     messages: Array<MessagePropsType>
+    newMessageBody: string
 }
 
 export type SidebarType = {};
@@ -45,17 +46,43 @@ export type UpdateNewPostTextActionType = {
     newText: string
 
 };
-export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
+//типы наших AC
+export type ActionsType = AddPostActionType | UpdateNewPostTextActionType |
+    updateNewMessageBodyActionType | sendMessageBodyActionType;
+export type updateNewMessageBodyActionType = {
+    type: "UPDATE-NEW-MESSAGE-BODY"
+    body: string
+};
+export type sendMessageBodyActionType = {
+    type: "SEND-MESSAGE"
+
+};
 export const addPostActionCreator = (): AddPostActionType => {
     return {
         type: "ADD-POST"
     } as const
 };
 
-export let updateNewPostActionCreator = (text: string): UpdateNewPostTextActionType => {
+export let updateNewPostAC = (text: string): UpdateNewPostTextActionType => {
     return {
         type: "UPDATE-NEW-POST",
         newText: text
+    } as const
+};
+//экшн добавляет сообщение в dialogs
+export let updateNewMessageBodyAC = (body: string): updateNewMessageBodyActionType => {
+    return {
+        type: "UPDATE-NEW-MESSAGE-BODY",
+        body: body
+
+    } as const
+};
+//экшн отправляет сообщение в dialogs
+export let sendMessageBody = (): sendMessageBodyActionType => {
+    return {
+        type: "SEND-MESSAGE",
+
+
     } as const
 };
 export type StoreType = {
@@ -87,13 +114,16 @@ export let store: StoreType = {
                 {id: 3, name: "Andrew"},
                 {id: 4, name: "Olia"},
                 {id: 5, name: "Sasha"}
-            ]
-            ,
+            ],
             messages: [
                 {id: 1, message: "HI"},
                 {id: 2, message: "How are you"},
-                {id: 3, message: "Peace"}
-            ]
+                {id: 3, message: "Peace"},
+                {id: 3, message: "Peace"},
+                {id: 3, message: "Peace"},
+            ],
+            newMessageBody: ''
+
         },
         sidebar: {},
     },
@@ -117,6 +147,16 @@ export let store: StoreType = {
         } else if (action.type === "UPDATE-NEW-POST") {
             this._state.profilePage.newPostText = action.newText;
             this._onChange(this._state)
+        } else if (action.type === "UPDATE-NEW-MESSAGE-BODY") {
+            this._state.dialogsPage.newMessageBody = action.body;
+            this._onChange(this._state)
+        } else if (action.type === "SEND-MESSAGE") {
+
+            let body = this._state.dialogsPage.newMessageBody;
+            this._state.dialogsPage.newMessageBody = "";
+            this._state.dialogsPage.messages.push({id: 6, message: body})
+            this._onChange(this._state)
         }
+
     },
 }
