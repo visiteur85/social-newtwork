@@ -1,32 +1,19 @@
-export type PostPropsType = {
-    id: number
-    message: string
-    likesCount: number
-}
+import {
+    DialogPageType,
+    dialogsReducer,
+    sendMessageBodyActionType,
+    updateNewMessageBodyActionType
+} from "./dialog-reducer";
+import {
+    AddPostActionType,
+    PostPropsType,
+    ProfilePageType,
+    profileReducer,
+    UpdateNewPostTextActionType
+} from "./profile-reducer";
 
 
-export type DialogPropsType = {
-    id: number
-    name: string
 
-};
-
-
-export type MessagePropsType = {
-    id: number
-    message: string
-
-};
-
-export type ProfilePageType = {
-    posts: Array<PostPropsType>,
-    newPostText: string
-};
-export type DialogPageType = {
-    dialogs: Array<DialogPropsType>
-    messages: Array<MessagePropsType>
-    newMessageBody: string
-}
 
 export type SidebarType = {};
 
@@ -37,54 +24,11 @@ export type RootStateType = {
 
 }
 
-export type AddPostActionType = {
 
-    type: "ADD-POST"
-};
-export type UpdateNewPostTextActionType = {
-    type: "UPDATE-NEW-POST"
-    newText: string
-
-};
 //типы наших AC
 export type ActionsType = AddPostActionType | UpdateNewPostTextActionType |
     updateNewMessageBodyActionType | sendMessageBodyActionType;
-export type updateNewMessageBodyActionType = {
-    type: "UPDATE-NEW-MESSAGE-BODY"
-    body: string
-};
-export type sendMessageBodyActionType = {
-    type: "SEND-MESSAGE"
 
-};
-export const addPostActionCreator = (): AddPostActionType => {
-    return {
-        type: "ADD-POST"
-    } as const
-};
-
-export let updateNewPostAC = (text: string): UpdateNewPostTextActionType => {
-    return {
-        type: "UPDATE-NEW-POST",
-        newText: text
-    } as const
-};
-//экшн добавляет сообщение в dialogs
-export let updateNewMessageBodyAC = (body: string): updateNewMessageBodyActionType => {
-    return {
-        type: "UPDATE-NEW-MESSAGE-BODY",
-        body: body
-
-    } as const
-};
-//экшн отправляет сообщение в dialogs
-export let sendMessageBody = (): sendMessageBodyActionType => {
-    return {
-        type: "SEND-MESSAGE",
-
-
-    } as const
-};
 export type StoreType = {
     _state: RootStateType
     _onChange: (state: RootStateType) => void
@@ -138,25 +82,9 @@ export let store: StoreType = {
         this._onChange = callback
     },
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            let newPost: PostPropsType = {id: 5, message: this._state.profilePage.newPostText, likesCount: 15};
-
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = ""
-            this._onChange(this._state);
-        } else if (action.type === "UPDATE-NEW-POST") {
-            this._state.profilePage.newPostText = action.newText;
-            this._onChange(this._state)
-        } else if (action.type === "UPDATE-NEW-MESSAGE-BODY") {
-            this._state.dialogsPage.newMessageBody = action.body;
-            this._onChange(this._state)
-        } else if (action.type === "SEND-MESSAGE") {
-
-            let body = this._state.dialogsPage.newMessageBody;
-            this._state.dialogsPage.newMessageBody = "";
-            this._state.dialogsPage.messages.push({id: 6, message: body})
-            this._onChange(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._onChange(this._state)
 
     },
 }

@@ -2,7 +2,8 @@ import React from 'react';
 import s from '../Dialogs/Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {sendMessageBody, StoreType, updateNewMessageBodyAC} from "../../redux/state";
+import {StoreType} from "../../redux/state";
+import {sendMessageBody, updateNewMessageBodyAC} from "../../redux/dialog-reducer";
 
 
 export type DialogsDataPropsType = {
