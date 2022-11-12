@@ -9,13 +9,14 @@ import {News} from "./components/News/News";
 import {IAm404} from "./components/404/IAm404";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ActionsType, RootStateType, StoreType} from "./redux/state";
+import {RootReducerType} from "./redux/redux-store";
+import {Dispatch} from "redux";
 
 
 export type AppPropsType = {
-    state: RootStateType
-    dispatch: (action: ActionsType) => void
-    store: StoreType
+
+    dispatch: Dispatch
+    store: RootReducerType
 
 }
 
@@ -31,11 +32,13 @@ const App = (props: AppPropsType) => {
                     {/*в начале мы попадаем на страницу '/' и переходим сразу на страницу profile*/}
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
                     <Route path={'/profile'}
-                           element={<Profile profilePage={props.state.profilePage}
+                           element={<Profile profilePage={props.store.profilePage}
                                              dispatch={props.dispatch}
                            />}/>
                     <Route path={"/dialogs"} element={<Dialogs
-                        store={props.store}/>}
+                        store={props.store}
+                        dispatch={props.dispatch}
+                    />}
                     />
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>

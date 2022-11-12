@@ -2,28 +2,31 @@ import React from 'react';
 import s from '../Dialogs/Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {StoreType} from "../../redux/state";
+
 import {sendMessageBody, updateNewMessageBodyAC} from "../../redux/dialog-reducer";
+import {RootReducerType} from "../../redux/redux-store";
+import {Dispatch} from "redux";
 
 
 export type DialogsDataPropsType = {
-    store: StoreType
+    dispatch: Dispatch
+    store: RootReducerType
 }
 
 
 export const Dialogs = (props: DialogsDataPropsType) => {
     //достаем диалогпЭйдж из стора
-    let state = props.store.getState().dialogsPage;
+    let state = props.store.dialogsPage
     const onSendMessageClick = () => {
-        props.store.dispatch(sendMessageBody())
+        props.dispatch(sendMessageBody())
 
     };
     const onNewMessageChange = (e: any) => {
         let body = e.target.value;
-        props.store.dispatch(updateNewMessageBodyAC(body))
+        props.dispatch(updateNewMessageBodyAC(body))
 
     };
-    let newMessageBody = props.store._state.dialogsPage.newMessageBody;
+    let newMessageBody = state.newMessageBody;
 
 
     return (

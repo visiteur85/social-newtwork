@@ -1,14 +1,15 @@
 import React from 'react';
 import {Post} from "./Post/Post";
 import s from '../MyPosts/MyPosts.module.css'
-import {ActionsType} from "../../../redux/state";
+
 import {addPostActionCreator, PostPropsType, updateNewPostAC} from "../../../redux/profile-reducer";
+import {Dispatch} from "redux";
 
 
 export type MyPostPropsType = {
     posts: Array<PostPropsType>
     newPostText: string
-    dispatch: (action: ActionsType) => void
+    dispatch: Dispatch
 }
 export const MyPosts = (props: MyPostPropsType) => {
     let newPostElement: any = React.createRef<HTMLTextAreaElement>()

@@ -1,12 +1,12 @@
 import React from 'react';
-import {ActionsType} from './state';
+
 
 
 export type DialogPageType = {
     dialogs: Array<DialogPropsType>
     messages: Array<MessagePropsType>
-    newMessageBody: string
-}
+    newMessageBody:string
+};
 export type DialogPropsType = {
     id: number
     name: string
@@ -18,7 +18,27 @@ export type MessagePropsType = {
 
 };
 
-export const dialogsReducer = (state: DialogPageType, action:ActionsType)=> {
+let initialState: DialogPageType = {
+    dialogs: [
+        {id: 1, name: "Pavel"},
+        {id: 2, name: "Dima"},
+        {id: 3, name: "Andrew"},
+        {id: 4, name: "Olia"},
+        {id: 5, name: "Sasha"},
+    ]
+    ,
+    messages: [
+        {id: 1, message: "HI"},
+        {id: 2, message: "How are you"},
+        {id: 3, message: "Peace"},
+        {id: 4, message: "Peace"},
+        {id: 5, message: "Peace"},
+    ],
+    newMessageBody:""
+
+};
+
+export const dialogsReducer = (state = initialState, action:DialogsActionsType)=> {
     switch(action.type) {
         case "UPDATE-NEW-MESSAGE-BODY": {
             state.newMessageBody = action.body;
@@ -33,6 +53,7 @@ export const dialogsReducer = (state: DialogPageType, action:ActionsType)=> {
         }}
     return state
 }
+export type DialogsActionsType = updateNewMessageBodyActionType | sendMessageBodyActionType;
 export type updateNewMessageBodyActionType = {
     type: "UPDATE-NEW-MESSAGE-BODY"
     body:string
