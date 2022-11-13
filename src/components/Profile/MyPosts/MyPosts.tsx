@@ -7,23 +7,24 @@ import {Dispatch} from "redux";
 
 
 export type MyPostPropsType = {
-    posts: Array<PostPropsType>
+    updateNewPostText: (text: string) => void
+    addPost: () => void
     newPostText: string
-    dispatch: Dispatch
+    posts: PostPropsType[]
 }
 export const MyPosts = (props: MyPostPropsType) => {
     let newPostElement: any = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
         if (newPostElement.current) {
-            props.dispatch(addPostActionCreator())
+            props.addPost()
         }
     }
 
     const onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value;
-            props.dispatch(updateNewPostAC(text))
+           props.updateNewPostText(text)
         }
     }
 

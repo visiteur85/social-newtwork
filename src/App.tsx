@@ -11,6 +11,7 @@ import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {RootReducerType} from "./redux/redux-store";
 import {Dispatch} from "redux";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 export type AppPropsType = {
@@ -35,7 +36,7 @@ const App = (props: AppPropsType) => {
                            element={<Profile profilePage={props.store.profilePage}
                                              dispatch={props.dispatch}
                            />}/>
-                    <Route path={"/dialogs"} element={<Dialogs
+                    <Route path={"/dialogs"} element={<DialogsContainer
                         store={props.store}
                         dispatch={props.dispatch}
                     />}
