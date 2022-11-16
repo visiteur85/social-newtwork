@@ -9,17 +9,10 @@ import {News} from "./components/News/News";
 import {IAm404} from "./components/404/IAm404";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {RootReducerType} from "./redux/redux-store";
-import {Dispatch} from "redux";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
-export type AppPropsType = {
-
-    dispatch: Dispatch
-    store: RootReducerType
-
-}
+export type AppPropsType = {}
 
 const App = (props: AppPropsType) => {
     return (
@@ -33,13 +26,8 @@ const App = (props: AppPropsType) => {
                     {/*в начале мы попадаем на страницу '/' и переходим сразу на страницу profile*/}
                     <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
                     <Route path={'/profile'}
-                           element={<Profile profilePage={props.store.profilePage}
-                                             dispatch={props.dispatch}
-                           />}/>
-                    <Route path={"/dialogs"} element={<DialogsContainer
-                        store={props.store}
-                        dispatch={props.dispatch}
-                    />}
+                           element={<Profile/>}/>
+                    <Route path={"/dialogs"} element={<DialogsContainer/>}
                     />
                     <Route path={'/news'} element={<News/>}/>
                     <Route path={'/music'} element={<Music/>}/>

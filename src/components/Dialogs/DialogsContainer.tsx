@@ -1,43 +1,36 @@
-import React from "react";
-import s from "./Dialogs.module.css";
 
-
-
-import {Dispatch} from "redux";
 import {Dialogs} from "./Dialogs";
+import {connect} from "react-redux";
+import {DialogPropsType, MessagePropsType, sendMessageBody, updateNewMessageBodyAC} from "../../redux/dialog-reducer";
 import {RootReducerType} from "../../redux/redux-store";
-import {sendMessageBody, updateNewMessageBodyAC} from "../../redux/dialog-reducer";
+import {Dispatch} from "redux";
 
-type PropsType = {
-    dispatch: Dispatch
-    store: RootReducerType
-};
-export const DialogsContainer = (props: PropsType) => {
-//достаем диалогпЭйдж из стора
+export type MapStateToPropsType = {
+    dialogs: Array<DialogPropsType>
+    messages: Array<MessagePropsType>
+    newMessageBody: string
+}
+export type MapDispatchToPropsType = {
+    updateNewMessageBodyAC: (body: string) => void
+    sendMessageBody: () => void
+}
+export type  DialogsPropsType = MapDispatchToPropsType & MapStateToPropsType;
 
+const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
+    return {
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        newMessageBody: state.dialogsPage.newMessageBody
 
-    let newMessageBody = props.store.dialogsPage.newMessageBody;
-//функция отправляет сообщеине в dialogs
-    let onSendMessageClick = () => {
-        props.dispatch(sendMessageBody())
+    }}
+    const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+        return {
+            updateNewMessageBodyAC: (body: string) => {
+                dispatch(updateNewMessageBodyAC(body))
+            },
+            sendMessageBody: () => {
+                dispatch(sendMessageBody())
+            }
+        }}
 
-    }
-
-    let onNewMessageChange = (body: string) => {
-
-        props.dispatch(updateNewMessageBodyAC(body))
-
-    }
-
-    return (
-        <Dialogs
-            sendMessageBody={onSendMessageClick}
-            updateNewMessageBodyAC={onNewMessageChange}
-            dialogs={props.store.dialogsPage.dialogs}
-            messages={props.store.dialogsPage.messages}
-            newMessageBody={newMessageBody}
-
-
-        />
-    );
-};
+        export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);

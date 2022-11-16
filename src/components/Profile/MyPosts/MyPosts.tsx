@@ -1,18 +1,13 @@
 import React from 'react';
 import {Post} from "./Post/Post";
 import s from '../MyPosts/MyPosts.module.css'
-
-import {addPostActionCreator, PostPropsType, updateNewPostAC} from "../../../redux/profile-reducer";
-import {Dispatch} from "redux";
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-export type MyPostPropsType = {
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-    newPostText: string
-    posts: PostPropsType[]
-}
-export const MyPosts = (props: MyPostPropsType) => {
+// export type MyPostPropsType = {
+//
+// }
+export const MyPosts = (props: MyPostsPropsType) => {
     let newPostElement: any = React.createRef<HTMLTextAreaElement>()
 
     const addPost = () => {
@@ -24,7 +19,7 @@ export const MyPosts = (props: MyPostPropsType) => {
     const onPostChange = () => {
         if (newPostElement.current) {
             let text = newPostElement.current.value;
-           props.updateNewPostText(text)
+            props.updateNewPostText(text)
         }
     }
 

@@ -3,20 +3,10 @@ import s from '../Dialogs/Dialogs.module.css'
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
 
-import {DialogPropsType, MessagePropsType} from "../../redux/dialog-reducer";
+import {DialogsPropsType} from "./DialogsContainer";
 
 
-
-export type DialogsDataPropsType = {
-    sendMessageBody: () => void
-    updateNewMessageBodyAC: (body: string) => void
-    dialogs: DialogPropsType[]
-    messages: MessagePropsType[]
-    newMessageBody: string
-}
-
-
-export const Dialogs = (props: DialogsDataPropsType) => {
+export const Dialogs = (props: DialogsPropsType) => {
     //достаем диалогпЭйдж из стора
 
     const onSendMessageClick = () => {
