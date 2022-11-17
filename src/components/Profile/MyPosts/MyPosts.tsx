@@ -17,6 +17,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
     }
 
     const onPostChange = () => {
+        console.log(newPostElement.current.value)
         if (newPostElement.current) {
             let text = newPostElement.current.value;
             props.updateNewPostText(text)

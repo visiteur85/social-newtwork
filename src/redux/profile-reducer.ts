@@ -1,4 +1,3 @@
-
 export type ProfilePageType = {
     posts: Array<PostPropsType>
     newPostText: string
@@ -9,7 +8,7 @@ export type PostPropsType = {
     likesCount: number
 };
 
-let initialState:  ProfilePageType = {
+let initialState: ProfilePageType = {
     posts: [
         {id: 1, message: "Hi, how are you", likesCount: 0},
         {id: 2, message: "it's my first post", likesCount: 23},
@@ -19,21 +18,25 @@ let initialState:  ProfilePageType = {
     newPostText: ""
 }
 
-export const profileReducer = (state = initialState, action:ProfileActionsType )=> {
-    switch(action.type){
+export const profileReducer = (state = initialState, action: ProfileActionsType) => {
+    switch (action.type) {
         case "ADD-POST": {
             let newPost: PostPropsType = {id: 5, message: state.newPostText, likesCount: 15};
+            let newState = {...state};
+            newState.posts = [...state.posts];
+            newState.posts.push(newPost);
+            newState.newPostText = "";
+            return newState
 
-            state.posts.push(newPost);
-            state.newPostText = "";
-            return state
         }
         case "UPDATE-NEW-POST": {
-            state.newPostText = action.newText;}
+            let newState = {...state};
+            newState.newPostText = action.newText;
+            return newState
+        }
+        default:
             return state
-
     }
-    return state
 }
 
 export type AddPostActionType = {
@@ -47,17 +50,17 @@ export type UpdateNewPostTextActionType = {
 };
 export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType
 
-export const addPostActionCreator = ():AddPostActionType=> {
+export const addPostActionCreator = (): AddPostActionType => {
     return {
         type: "ADD-POST"
-    }as const
+    } as const
 };
 
-export let updateNewPostAC = (text:string):UpdateNewPostTextActionType => {
+export let updateNewPostAC = (text: string): UpdateNewPostTextActionType => {
     return {
         type: "UPDATE-NEW-POST",
-        newText:text
-    }as const
+        newText: text
+    } as const
 };
 
 
