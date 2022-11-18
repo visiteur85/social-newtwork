@@ -51,6 +51,7 @@ export const dialogsReducer = (state = initialState, action: DialogsActionsType)
             let newState = {...state, messages: [...state.messages]}
             let body = state.newMessageBody;
             newState.newMessageBody = "";
+            
             newState.messages.push({id: 6, message: body})
             return newState
         }
