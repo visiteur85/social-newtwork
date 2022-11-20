@@ -1,5 +1,4 @@
 import React from "react";
-
 import s from "./users.module.css"
 import {OneUserType} from "../../redux/users-reducer";
 import axios from "axios";
@@ -12,18 +11,24 @@ type PropsType = {
 };
 
 export const Users = (props: PropsType) => {
+    const getUsers = () => {
+        if (props.items.length === 0) {
 
-    if (props.items.length === 0) {
+            axios.get("https://social-network.samuraijs.com/api/1.0/users", {
+                headers: {
+                    'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
+                }
+            })
+                .then(response => {
+                    props.setUsers(response.data.items)
+                })
+        }
+    }
 
-        axios.get("https://social-network.samuraijs.com/api/1.0/users", {headers: {
-                'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-            }})
 
-            .then(response => {
-                props.setUsers(response.data.items)
-            })}
     return (
         <div>
+            <button onClick={getUsers}> get Users</button>
             {props.items.map((user) => {
                 return <div key={user.id}>
           <span>
@@ -62,5 +67,6 @@ export const Users = (props: PropsType) => {
             })}
         </div>
     );
-;}
+
+}
 
