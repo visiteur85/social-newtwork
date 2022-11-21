@@ -10,27 +10,27 @@ type PropsType = {
     setUsers: (items: Array<OneUserType>) => void
 };
 
-export const Users = (props: PropsType) => {
-    const getUsers = () => {
-        if (props.items.length === 0) {
-
-            axios.get("https://social-network.samuraijs.com/api/1.0/users", {
-                headers: {
-                    'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-                }
-            })
-                .then(response => {
-                    props.setUsers(response.data.items)
-                })
-        }
+export class Users extends React.Component<PropsType> {
+    constructor(props:PropsType) {
+        super(props);
+        axios.get("https://social-network.samuraijs.com/api/1.0/users", {
+            headers: {
+                'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
+            }
+        }).then(res => {
+            this.props.setUsers(res.data.items)
+        })
     }
 
+    render() {
 
-    return (
-        <div>
-            <button onClick={getUsers}> get Users</button>
-            {props.items.map((user) => {
-                return <div key={user.id}>
+
+
+        return (
+            <div>
+                {/*<button onClick={getUsers}> get Users</button>*/}
+                {this.props.items.map((user) => {
+                    return <div key={user.id}>
           <span>
             <div>
                 <img src={user.photos.small !== null ? user.photos.small :
@@ -40,16 +40,16 @@ export const Users = (props: PropsType) => {
             <div>
               {user.followed ?
                   <button onClick={() => {
-                      props.unFollow(user.id)
+                      this.props.unFollow(user.id)
                   }}>UnFollow</button>
                   : <button onClick={() => {
-                      props.follow(user.id)
+                      this.props.follow(user.id)
                   }}>Follow</button>
               }
 
             </div>
           </span>
-                    <span>
+                        <span>
             <span>
               <div>{user.name}</div>
               <div>{user.status}</div>
@@ -63,10 +63,11 @@ export const Users = (props: PropsType) => {
               </div>
             </span>
           </span>
-                </div>
-            })}
-        </div>
-    );
+                    </div>
+                })}
+            </div>
+        );
 
+    }
 }
 
