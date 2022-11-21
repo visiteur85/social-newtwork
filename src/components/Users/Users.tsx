@@ -10,25 +10,24 @@ type PropsType = {
     setUsers: (items: Array<OneUserType>) => void
 };
 
+
 export class Users extends React.Component<PropsType> {
-    constructor(props:PropsType) {
-        super(props);
+    componentDidMount() {
         axios.get("https://social-network.samuraijs.com/api/1.0/users", {
             headers: {
                 'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
             }
-        }).then(res => {
-            this.props.setUsers(res.data.items)
         })
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
     }
 
     render() {
 
 
-
         return (
             <div>
-                {/*<button onClick={getUsers}> get Users</button>*/}
                 {this.props.items.map((user) => {
                     return <div key={user.id}>
           <span>
