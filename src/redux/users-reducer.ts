@@ -1,11 +1,15 @@
 export type UsersPageType = {
     items: Array<OneUserType>
+    totalCount: number
+    pageSize: number
+    currentPage: number
+
 }
 
 export type OneUserType = {
     name: string
     id: number
-    uniqueUrlName:string | null
+    uniqueUrlName: string | null
     photos: photosType
     status: string | null
     followed: boolean
@@ -16,11 +20,11 @@ export type photosType = {
 };
 
 
-
 let initialState: UsersPageType = {
-    items: [
-
-    ]
+    items: [],
+    totalCount: 0,
+    pageSize: 50,
+    currentPage: 1
 
 };
 
@@ -41,12 +45,18 @@ export const usersReducer = (state = initialState, action: UsersActionsType): Us
             return newState
         }
         case "SET-Users": {
-            return {...state, items: [...state.items, ...action.items]}
+            return {...state, items: action.items}
+        }
+        case "SET-CURRENT-PAGE": {
+            return {...state, currentPage: action.page}
+        }
+        case "SET-TOTAL-USERS": {
+            return {...state, totalCount: action.totalCount}
         }
     }
     return state
 }
-export type UsersActionsType = FolllowType | UnFolllowType | SetUsersType
+export type UsersActionsType = FolllowType | UnFolllowType | SetUsersType | SetCurrentPageType | setTotalUsersCountType
 
 export type FolllowType = ReturnType<typeof followAC>
 export let followAC = (userId: number) => {
@@ -71,11 +81,26 @@ export type SetUsersType = ReturnType<typeof setUsersAC>
 export let setUsersAC = (items: Array<OneUserType>) => {
 
     return {
-
         type: "SET-Users",
         items
+    } as const
+};
 
+export type SetCurrentPageType = ReturnType<typeof setCurrentPageAC>
+export let setCurrentPageAC = (page: number) => {
 
+    return {
+        type: "SET-CURRENT-PAGE",
+        page
+    } as const
+};
+
+export type setTotalUsersCountType = ReturnType<typeof setTotalUsersCountAC>
+export let setTotalUsersCountAC = (totalCount: number) => {
+
+    return {
+        type: "SET-TOTAL-USERS",
+        totalCount
     } as const
 };
 
