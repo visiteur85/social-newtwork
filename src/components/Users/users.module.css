@@ -5,3 +5,8 @@
 .selectedPage {
     font-weight: bold;
 }
+
+.listOfUsersPages {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

@@ -7,7 +7,7 @@ import {RootReducerType} from "../../redux/redux-store";
 import {
     followAC,
     OneUserType,
-    setCurrentPageAC,
+    setCurrentPageAC, setIsFetchingAC,
     setTotalUsersCountAC,
     setUsersAC,
     unFollowAC
@@ -23,15 +23,19 @@ type PropsType = {
     setUsers: (users: Array<OneUserType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
+    setIsFetching: (isFetching: boolean) => void
 
     pageSize: number
     totalCount: number
     currentPage: number
+    isFetching: boolean
+
 };
 
 export class UsersApiComponent extends React.Component<PropsType> {
 
     componentDidMount() {
+        this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
             {
                 headers: {
@@ -39,6 +43,7 @@ export class UsersApiComponent extends React.Component<PropsType> {
                 }
             })
             .then(response => {
+                this.props.setIsFetching(false)
                 this.props.setUsers(response.data.items);
                 this.props.setTotalUsersCount(response.data.totalCount);
             })
@@ -47,11 +52,13 @@ export class UsersApiComponent extends React.Component<PropsType> {
 
     onChangedPage = (page: number) => {
         this.props.setCurrentPage(page)
+        this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
             headers: {
                 'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
             }
         }).then(response => {
+            this.props.setIsFetching(false)
             this.props.setUsers(response.data.items);
             // this.props.setTotalUsersCount(response.data.totalCount);
         })
@@ -66,6 +73,7 @@ export class UsersApiComponent extends React.Component<PropsType> {
             items={this.props.items}
             follow={this.props.follow}
             unFollow={this.props.unFollow}
+            isFetching={this.props.isFetching}
 
 
         />
@@ -80,6 +88,7 @@ type MapStateToPropsType = {
     pageSize: number
     totalCount: number
     currentPage: number
+    isFetching: boolean
 
 };
 const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
@@ -87,7 +96,8 @@ const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
         items: state.userPage.items,
         pageSize: state.userPage.pageSize,
         totalCount: state.userPage.totalCount,
-        currentPage: state.userPage.currentPage
+        currentPage: state.userPage.currentPage,
+        isFetching: state.userPage.isFetching
     };
 };
 
@@ -97,6 +107,7 @@ export type MapDispatchToPropsType = {
     setUsers: (items: Array<OneUserType>) => void
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (totalCount: number) => void
+    setIsFetching: (isFetching: boolean) => void
 };
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
@@ -114,6 +125,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         },
         setTotalUsersCount: (totalCount: number) => {
             dispatch(setTotalUsersCountAC(totalCount))
+        },
+        setIsFetching: (isFetching: boolean) => {
+            dispatch((setIsFetchingAC(isFetching)))
         }
     };
 };

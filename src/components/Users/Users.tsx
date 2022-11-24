@@ -1,6 +1,7 @@
 import React from "react";
 import s from "./users.module.css"
 import {OneUserType} from "../../redux/users-reducer";
+import {LinearProgress} from "@mui/material";
 
 
 type PropsType = {
@@ -11,6 +12,7 @@ type PropsType = {
     pageSize: number
     totalCount: number
     currentPage: number
+    isFetching: boolean
 
 
 };
@@ -26,7 +28,8 @@ export const Users = (props: PropsType) => {
 
     return (
         <div>
-            <div>
+            {props.isFetching && <LinearProgress color="secondary"/>}
+            <div className={s.listOfUsersPages}>
                 {pages.map(m => {
                     return <span className={props.currentPage === m ? s.selectedPage : ""}
                                  onClick={() => props.onChangedPage(m)}>{m}</span>
