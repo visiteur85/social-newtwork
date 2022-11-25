@@ -1,16 +1,10 @@
 import {connect} from "react-redux";
 import React from "react";
 
-
-import {Dispatch} from "redux";
 import {RootReducerType} from "../../redux/redux-store";
 import {
-    followAC,
-    OneUserType,
-    setCurrentPageAC, setIsFetchingAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unFollowAC
+    follow,
+    OneUserType, setCurrentPage, setIsFetching, setTotalUsersCount, setUsers, unFollow,
 } from "../../redux/users-reducer";
 
 import axios from "axios";
@@ -74,8 +68,6 @@ export class UsersApiComponent extends React.Component<PropsType> {
             follow={this.props.follow}
             unFollow={this.props.unFollow}
             isFetching={this.props.isFetching}
-
-
         />
 
 
@@ -101,38 +93,8 @@ const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
     };
 };
 
-export type MapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (items: Array<OneUserType>) => void
-    setCurrentPage: (page: number) => void
-    setTotalUsersCount: (totalCount: number) => void
-    setIsFetching: (isFetching: boolean) => void
-};
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        follow: (userId: number) => {
-            dispatch(followAC(userId));
-        },
-        unFollow: (userId: number) => {
-            dispatch(unFollowAC(userId));
-        },
-        setUsers: (users: Array<OneUserType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (page: number) => {
-            dispatch(setCurrentPageAC(page))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setTotalUsersCountAC(totalCount))
-        },
-        setIsFetching: (isFetching: boolean) => {
-            dispatch((setIsFetchingAC(isFetching)))
-        }
-    };
-};
 
 export const UsersContainer = connect(
     mapStateToProps,
-    mapDispatchToProps
+    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, setIsFetching}
 )(UsersApiComponent);
