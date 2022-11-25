@@ -1,7 +1,32 @@
 export type ProfilePageType = {
     posts: Array<PostPropsType>
     newPostText: string
+    profile: ProfileFromServerType | null
 };
+export type ProfileFromServerType = {
+    aboutMe:string
+    contacts: ContactsForProfileType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId:number
+    photos: PhotosForProfileType
+
+};
+export type ContactsForProfileType = {
+    facebook:string
+    website:	null | string
+    vk: string
+    twitter:string
+    instagram: string
+    youtube:	null | string
+    github:	string
+    mainLink:	null | string
+};
+export type PhotosForProfileType = {
+    small: string
+    large:string
+}
 export type PostPropsType = {
     id: number
     message: string
@@ -15,7 +40,8 @@ let initialState: ProfilePageType = {
         {id: 3, message: "I m ok", likesCount: 14},
         {id: 4, message: "Great", likesCount: 43},
     ],
-    newPostText: ""
+    newPostText: "",
+    profile: null
 }
 
 export const profileReducer = (state = initialState, action: ProfileActionsType) => {
@@ -34,6 +60,10 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             newState.newPostText = action.newText;
             return newState
         }
+        case "Set_USER_PROFILE": {
+            let newState = {...state, profile: action.profile}
+            return newState
+        }
         default:
             return state
     }
@@ -48,7 +78,7 @@ export type UpdateNewPostTextActionType = {
     newText: string
 
 };
-export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType
+export type ProfileActionsType = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileType
 
 export const addPost = (): AddPostActionType => {
     return {
@@ -63,4 +93,15 @@ export let updateNewPostText = (text: string): UpdateNewPostTextActionType => {
     } as const
 };
 
+export type SetUserProfileType = {
+    type: "Set_USER_PROFILE"
+    profile: any
+
+};
+export let setUserProfile = (profile:any):SetUserProfileType => {
+    return {type:"Set_USER_PROFILE",
+        profile
+
+    }
+}
 
