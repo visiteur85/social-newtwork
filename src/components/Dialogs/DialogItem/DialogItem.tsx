@@ -11,7 +11,7 @@ export type DialogItemPropsTime = {
 export const DialogItem = (props: DialogItemPropsTime) => {
     return (
         <div className={s.dialog}>
-            <NavLink className={({isActive}) => isActive ? s.active : s.dialog}
+            <NavLink
                      to={`/dialogs/${props.id}`}>
                 {props.name}
             </NavLink>

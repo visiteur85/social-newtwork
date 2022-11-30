@@ -5,9 +5,10 @@ import {ProfileFromServerType} from "../../../redux/profile-reducer";
 
 
 type PropsType = {
-    profile:ProfileFromServerType | null
+    profile: ProfileFromServerType | null
 }
-export const ProfileInfo = (props:PropsType) => {
+export const ProfileInfo = (props: PropsType) => {
+
     if (!props.profile) {
         return <LinearProgress/>
     }
@@ -20,8 +21,10 @@ export const ProfileInfo = (props:PropsType) => {
             </div>
 
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.small}/>
-                ava+description</div>
+                <img src={props.profile?.photos.large}/>
+                <span>{props.profile.aboutMe}</span>
+                ava+description
+            </div>
         </div>
     );
 };
