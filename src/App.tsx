@@ -11,6 +11,7 @@ import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./components/Users/UsersContainer";
 import {ProfileContainer} from "./components/Profile/ProfileContainer";
+import {HeaderContainer} from "./components/Header/HeaderContainer";
 
 
 
@@ -20,7 +21,7 @@ const App = () => {
     return (
         <div className="app-wrapper">
 
-            <Header/>
+            <HeaderContainer/>
             <NavBar/>
             <div className='app-wrapper-content'>
                 {/*<Routes>*/}
@@ -37,6 +38,7 @@ const App = () => {
                 {/*    <Route path={'/settings'} element={<Settings/>}/>*/}
                 {/*    <Route path={'/*'} element={<IAm404/>}/>*/}
                 {/*</Routes>*/}
+                <Route exact path={"/"} render={() => <ProfileContainer/>}/>
                 <Route exact path={"/dialogs"} render={() => <DialogsContainer/>}/>
                 <Route exact path={"/profile/:userId?"} render={() => <ProfileContainer/>}/>
                 <Route exact path={"/users"} render={() => <UsersContainer/>}/>
