@@ -3,6 +3,7 @@ import s from "./users.module.css"
 import {OneUserType} from "../../redux/users-reducer";
 import {LinearProgress} from "@mui/material";
 import {NavLink} from "react-router-dom";
+import axios from "axios";
 
 
 type PropsType = {
@@ -14,6 +15,7 @@ type PropsType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    setIsFetching: (isFetching: boolean) => void
 
 
 };
@@ -51,9 +53,44 @@ export const Users = (props: PropsType) => {
               {user.followed ?
                   <button onClick={() => {
                       props.unFollow(user.id)
-                  }}>UnFollow</button>
+                      {
+                          props.setIsFetching(true)
+                      }
+                      axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
+                          headers: {
+                              'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
+                          },
+                          withCredentials: true
+                      })
+                          .then(response => {
+                              {
+                                  props.setIsFetching(false)
+                              }
+                              if (response.data.resultCode === 0) {
+                                  props.unFollow(user.id)
+                              }
+                          })
+                  }
+                  }>UnFollow</button>
                   : <button onClick={() => {
-                      props.follow(user.id)
+                      {
+                          props.setIsFetching(true)
+                      }
+                      axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
+                          headers: {
+                              'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
+                          },
+                          withCredentials: true
+                      })
+                          .then(response => {
+                              {
+                                  props.setIsFetching(false)
+                              }
+                              if (response.data.resultCode === 0) {
+                                  props.follow(user.id)
+                              }
+                          })
+
                   }}>Follow</button>
               }
 

@@ -33,7 +33,7 @@ export class UsersApiComponent extends React.Component<PropsType> {
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
             {
                 headers: {
-                    'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
+                    'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
                 }
             })
             .then(response => {
@@ -49,7 +49,7 @@ export class UsersApiComponent extends React.Component<PropsType> {
         this.props.setIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
             headers: {
-                'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
+                'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
             }
         }).then(response => {
             this.props.setIsFetching(false)
@@ -68,6 +68,9 @@ export class UsersApiComponent extends React.Component<PropsType> {
             follow={this.props.follow}
             unFollow={this.props.unFollow}
             isFetching={this.props.isFetching}
+            setIsFetching={this.props.setIsFetching}
+
+
         />
 
 
