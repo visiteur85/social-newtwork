@@ -9,6 +9,8 @@ import {
 
 import axios from "axios";
 import {Users} from "./Users";
+import {userApi} from "../../API/api";
+import {logDOM} from "@testing-library/react";
 
 type PropsType = {
     items: Array<OneUserType>
@@ -30,32 +32,27 @@ export class UsersApiComponent extends React.Component<PropsType> {
 
     componentDidMount() {
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-            {
-                headers: {
-                    'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-                }
-            })
+
+        userApi.getUsers(this.props.currentPage, this.props.pageSize)
             .then(response => {
+
                 this.props.setIsFetching(false)
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+                this.props.setUsers(response.items);
+                this.props.setTotalUsersCount(response.totalCount);
             })
 
     }
 
+
     onChangedPage = (page: number) => {
         this.props.setCurrentPage(page)
         this.props.setIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
-            headers: {
-                'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-            }
-        }).then(response => {
-            this.props.setIsFetching(false)
-            this.props.setUsers(response.data.items);
-            // this.props.setTotalUsersCount(response.data.totalCount);
-        })
+        userApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(response => {
+                this.props.setIsFetching(false)
+                this.props.setUsers(response.items);
+                // this.props.setTotalUsersCount(response.data.totalCount);
+            })
     }
 
     render() {
