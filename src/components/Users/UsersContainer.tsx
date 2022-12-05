@@ -4,7 +4,7 @@ import React from "react";
 import {RootReducerType} from "../../redux/redux-store";
 import {
     follow,
-    OneUserType, setCurrentPage, setIsFetching, setTotalUsersCount, setUsers, unFollow,
+    OneUserType, setCurrentPage, setIsFetching, setTotalUsersCount, setUsers, toggleFollowingProgress, unFollow,
 } from "../../redux/users-reducer";
 
 import axios from "axios";
@@ -20,11 +20,13 @@ type PropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalCount: number) => void
     setIsFetching: (isFetching: boolean) => void
+    toggleFollowingProgress:(isFetching: boolean,userId:number)=>void
 
     pageSize: number
     totalCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress:number[]
 
 };
 
@@ -66,6 +68,8 @@ export class UsersApiComponent extends React.Component<PropsType> {
             unFollow={this.props.unFollow}
             isFetching={this.props.isFetching}
             setIsFetching={this.props.setIsFetching}
+            toggleFollowingProgress={this.props.toggleFollowingProgress}
+            followingInProgress={this.props.followingInProgress}
 
 
         />
@@ -81,6 +85,7 @@ type MapStateToPropsType = {
     totalCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress:number[]
 
 };
 const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
@@ -89,12 +94,13 @@ const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
         pageSize: state.userPage.pageSize,
         totalCount: state.userPage.totalCount,
         currentPage: state.userPage.currentPage,
-        isFetching: state.userPage.isFetching
+        isFetching: state.userPage.isFetching,
+        followingInProgress:state.userPage.followingInProgress
     };
 };
 
 
 export const UsersContainer = connect(
     mapStateToProps,
-    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, setIsFetching}
+    {follow, unFollow, setUsers, setCurrentPage, setTotalUsersCount, setIsFetching, toggleFollowingProgress}
 )(UsersApiComponent);
