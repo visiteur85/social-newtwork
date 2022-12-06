@@ -18,6 +18,8 @@ type PropsType = {
     setIsFetching: (isFetching: boolean) => void
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
     followingInProgress: number[]
+    followThunkCreator: (userId: number) => void
+    unFollowThunkCreator: (userId: number) => void
 
 
 };
@@ -36,7 +38,7 @@ export const Users = (props: PropsType) => {
             {props.isFetching && <LinearProgress color="secondary"/>}
             <div className={s.listOfUsersPages}>
                 {pages.map(m => {
-                    return <span className={props.currentPage === m ? s.selectedPage : ""}
+                    return <span key={m.toString()} className={props.currentPage === m ? s.selectedPage : ""}
                                  onClick={() => props.onChangedPage(m)}>{m}</span>
                 })}
 
@@ -56,37 +58,13 @@ export const Users = (props: PropsType) => {
                   <button disabled={props.followingInProgress.some(id => id === user.id)}
                           onClick={() => {
                               props.toggleFollowingProgress(true, user.id)
-                              axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                                  headers: {
-                                      'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-                                  },
-                                  withCredentials: true
-                              })
-                                  .then(response => {
-
-                                      if (response.data.resultCode === 0) {
-                                          props.unFollow(user.id)
-                                      }
-                                      props.toggleFollowingProgress(false, user.id)
-                                  })
+                              props.unFollowThunkCreator(user.id)
                           }
                           }>UnFollow</button>
                   : <button disabled={props.followingInProgress.some(id => id === user.id)}
                             onClick={() => {
                                 props.toggleFollowingProgress(true, user.id)
-                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
-                                    headers: {
-                                        'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
-                                    },
-                                    withCredentials: true
-                                })
-                                    .then(response => {
-
-                                        if (response.data.resultCode === 0) {
-                                            props.follow(user.id)
-                                        }
-                                        props.toggleFollowingProgress(false, user.id)
-                                    })
+                                props.followThunkCreator(user.id)
 
                             }}>Follow</button>
               }
