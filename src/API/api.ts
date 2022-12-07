@@ -1,4 +1,5 @@
 import axios from "axios";
+import {AuthFromServerType} from "../redux/auth-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -22,5 +23,25 @@ export const userApi = {
     unFollow(userId: number) {
 
         return instance.delete(`1.0/follow/${userId}`)
-    }
+    },
+    getProfile(userId:number) {
+        return instance.get(`1.0/profile/${userId}`
+        )
+    },
+}
+
+export const authApi = {
+    me() {
+        return instance.get<AuthFromServerType>(`1.0/auth/me`,
+            {
+                headers: {
+                    'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
+                },
+                withCredentials: true
+            })
+
+    },
+
+
+
 }

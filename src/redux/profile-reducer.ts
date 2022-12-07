@@ -1,31 +1,34 @@
+import {userApi} from "../API/api";
+import {Dispatch} from "redux";
+
 export type ProfilePageType = {
     posts: Array<PostPropsType>
     newPostText: string
     profile: ProfileFromServerType | null
 };
 export type ProfileFromServerType = {
-    aboutMe:string
+    aboutMe: string
     contacts: ContactsForProfileType
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    userId:number
+    userId: number
     photos: PhotosForProfileType
 
 };
 export type ContactsForProfileType = {
-    facebook:string
-    website:	null | string
+    facebook: string
+    website: null | string
     vk: string
-    twitter:string
+    twitter: string
     instagram: string
-    youtube:	null | string
-    github:	string
-    mainLink:	null | string
+    youtube: null | string
+    github: string
+    mainLink: null | string
 };
 export type PhotosForProfileType = {
     small: string
-    large:string
+    large: string
 }
 export type PostPropsType = {
     id: number
@@ -98,10 +101,22 @@ export type SetUserProfileType = {
     profile: any
 
 };
-export let setUserProfile = (profile:any):SetUserProfileType => {
-    return {type:"Set_USER_PROFILE",
+export let setUserProfile = (profile: any): SetUserProfileType => {
+    return {
+        type: "Set_USER_PROFILE",
         profile
 
     }
 }
+
+export const getProfileThunkCreator = (userId: number) => {
+    return async (dispatch: Dispatch<any>) => {
+        let res = await userApi.getProfile(userId)
+        console.log(res)
+
+        dispatch(setUserProfile(res.data))
+
+
+    }
+};
 

@@ -16,10 +16,9 @@ import {
     unFollowThunkCreator,
 } from "../../redux/users-reducer";
 
-import axios from "axios";
+
 import {Users} from "./Users";
-import {userApi} from "../../API/api";
-import {logDOM} from "@testing-library/react";
+
 
 type PropsType = {
     items: Array<OneUserType>
@@ -31,8 +30,8 @@ type PropsType = {
     setIsFetching: (isFetching: boolean) => void
     toggleFollowingProgress: (isFetching: boolean, userId: number) => void
     getUsersThunkCreator: (currentPage: number, pageSize: number) => void
-    followThunkCreator: (userId: number)=>void
-    unFollowThunkCreator: (userId: number)=>void
+    followThunkCreator: (userId: number) => void
+    unFollowThunkCreator: (userId: number) => void
 
     pageSize: number
     totalCount: number

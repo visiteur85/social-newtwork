@@ -1,4 +1,5 @@
-import React from 'react';
+import {authApi} from "../API/api";
+import {Dispatch} from "redux";
 
 
 export type AuthFromServerType = {
@@ -56,4 +57,16 @@ export const setUserData = (id: number, email: string, login: string) => {
         type: "SET-USER-DATE",
         data: {id, email, login}
     } as const
+};
+
+
+export const getMeThunkCreator = () => {
+    return async (dispatch: Dispatch<any>) => {
+        let res = await authApi.me()
+        if (res.data.resultCode === 0) {
+            dispatch(setUserData(res.data.data.id, res.data.data.email,
+                res.data.data.login))
+        }
+
+    }
 };
