@@ -5,6 +5,7 @@ import React from "react";
 import {getProfileThunkCreator, ProfileFromServerType} from "../../redux/profile-reducer";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {Redirect} from "react-router";
 
 type PathParamsType = {
     //разобраться строка или число
@@ -15,6 +16,7 @@ type PropsType = {
 
     profile: ProfileFromServerType | null
     getProfileThunkCreator: (userId: number) => void
+    isAuth: boolean
 };
 
 export class ProfileAPIContainer extends React.Component<CommonPropsType> {
@@ -30,6 +32,8 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
     }
 
     render() {
+        if (!this.props.isAuth) return <Redirect to={"/login"}/>
+
         return (
             <Profile profile={this.props.profile}/>
         );
@@ -38,11 +42,15 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
 
 type MapStateToPropsType = {
     profile: ProfileFromServerType | null
+    isAuth: boolean
 
 };
 
 let mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
-    return {profile: state.profilePage.profile}
+    return {
+        profile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
+    }
 }
 
 

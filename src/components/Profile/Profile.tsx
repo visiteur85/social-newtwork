@@ -7,13 +7,13 @@ import {ProfileFromServerType} from "../../redux/profile-reducer";
 
 
 export type ProfilepropsType = {
-    profile:ProfileFromServerType | null
+    profile: ProfileFromServerType | null
 }
 
 export const Profile = (props: ProfilepropsType) => {
     return (
         <div>
-            <ProfileInfo profile={props.profile} />
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );
