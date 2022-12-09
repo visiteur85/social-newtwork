@@ -10,10 +10,9 @@ import {
     setCurrentPage,
     setIsFetching,
     setTotalUsersCount,
-    setUsers,
-    toggleFollowingProgress,
-    unFollow,
-    unFollowThunkCreator,
+    setUsers, toggleFollowingProgress, unFollow, unFollowThunkCreator,
+
+
 } from "../../redux/users-reducer";
 
 
