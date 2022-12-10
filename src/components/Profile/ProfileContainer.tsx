@@ -1,12 +1,11 @@
 import {RootReducerType} from "../../redux/redux-store";
+import axios from "axios";
 
 import {Profile} from "./Profile";
 import React from "react";
-import {getProfileThunkCreator, ProfileFromServerType} from "../../redux/profile-reducer";
+import {ProfileFromServerType, setUserProfile} from "../../redux/profile-reducer";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {WithAuthRedirect} from "../../HOC/WithAuthRedirect";
-import {compose} from "redux";
 
 type PathParamsType = {
     //разобраться строка или число
@@ -14,10 +13,8 @@ type PathParamsType = {
 }
 type CommonPropsType = RouteComponentProps<PathParamsType> & PropsType
 type PropsType = {
-
+    setUserProfile: (profile: ProfileFromServerType | null) => void
     profile: ProfileFromServerType | null
-    getProfileThunkCreator: (userId: number) => void
-    isAuth: boolean
 };
 
 export class ProfileAPIContainer extends React.Component<CommonPropsType> {
@@ -29,35 +26,34 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
         if (!userId) {
             userId = 2
         }
-        this.props.getProfileThunkCreator(userId)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
+            {
+                headers: {
+                    'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
+                }
+            })
+            .then(response => {
+                this.props.setUserProfile(response.data)
+            })
     }
 
     render() {
-
         return (
             <Profile profile={this.props.profile}/>
         );
     }
-}
-let AuthRedirectComponent:any = WithAuthRedirect(ProfileAPIContainer);
+};
+
 type MapStateToPropsType = {
     profile: ProfileFromServerType | null
-
 
 };
 
 let mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
-    return {
-        profile: state.profilePage.profile,
-
-    }
+    return {profile: state.profilePage.profile}
 }
 
 
-// let WithUrlDataContainer:any = withRouter(AuthRedirectComponent);
+let WithUrlDataContainer = withRouter(ProfileAPIContainer);
 
-// export const ProfileContainer = connect(mapStateToProps, {getProfileThunkCreator})(WithUrlDataContainer)
-export const ProfileContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator}),
-    withRouter,)
-(AuthRedirectComponent)
+export const ProfileContainer = connect(mapStateToProps, {setUserProfile})(WithUrlDataContainer)
