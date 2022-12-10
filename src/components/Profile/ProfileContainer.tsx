@@ -5,8 +5,8 @@ import React from "react";
 import {getProfileThunkCreator, ProfileFromServerType} from "../../redux/profile-reducer";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {Redirect} from "react-router";
 import {WithAuthRedirect} from "../../HOC/WithAuthRedirect";
+import {compose} from "redux";
 
 type PathParamsType = {
     //разобраться строка или число
@@ -55,6 +55,10 @@ let mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
 }
 
 
-let WithUrlDataContainer:any = withRouter(AuthRedirectComponent);
+// let WithUrlDataContainer:any = withRouter(AuthRedirectComponent);
 
-export const ProfileContainer = connect(mapStateToProps, {getProfileThunkCreator})(WithUrlDataContainer)
+// export const ProfileContainer = connect(mapStateToProps, {getProfileThunkCreator})(WithUrlDataContainer)
+export const ProfileContainer = compose<React.ComponentType>(
+    connect(mapStateToProps, {getProfileThunkCreator}),
+    withRouter,)
+(AuthRedirectComponent)
