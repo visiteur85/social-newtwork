@@ -33,7 +33,6 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
     }
 
     render() {
-        // if (!this.props.isAuth) return <Redirect to={"/login"}/>
 
         return (
             <Profile profile={this.props.profile}/>
