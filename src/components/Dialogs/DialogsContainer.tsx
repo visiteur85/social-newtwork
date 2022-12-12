@@ -36,10 +36,6 @@ const mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
             }
         }}
 
-        // export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
-// let AuthRedirectComponent = WithAuthRedirect(Dialogs)
-
-// export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent);
 export const DialogsContainer = compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
     WithAuthRedirect)(Dialogs)

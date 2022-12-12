@@ -2,6 +2,7 @@ import React from 'react';
 import s from "../ProfileInfo/ProfileInfo.module.css";
 import {LinearProgress} from "@mui/material";
 import {ProfileFromServerType} from "../../../redux/profile-reducer";
+import {ProfileStatus} from "./ProfileStatus/ProfileStatus";
 
 
 type PropsType = {
@@ -14,17 +15,17 @@ export const ProfileInfo = (props: PropsType) => {
     }
     return (
         <div>
-            <div>
-                <img className={s.imgContent}
-                     src="https://www.komar.de/ru/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/8/5/8515_1.jpg"
-                     alt=""/>
-            </div>
+            {/*<div>*/}
+            {/*    <img className={s.imgContent}*/}
+            {/*         src="https://www.komar.de/ru/media/catalog/product/cache/7/image/9df78eab33525d08d6e5fb8d27136e95/8/5/8515_1.jpg"*/}
+            {/*         alt=""/>*/}
+            {/*</div>*/}
 
             <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large}/>
-                <span>{props.profile.aboutMe}</span>
-                ava+description
-            </div>
+                <img src={props.profile.photos.small}/>
+                ava+description</div>
+            <ProfileStatus status={"Hello my friends"}/>
+
         </div>
     );
 };
