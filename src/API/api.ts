@@ -25,17 +25,33 @@ export const userApi = {
         return instance.delete(`1.0/follow/${userId}`)
     },
     getProfile(userId:number) {
+        // return instance.get(`1.0/profile/${userId}`
+        //
+        // )
+        return profileApi.getProfile(userId)
+    },
+}
+
+export const profileApi = {
+    getProfile(userId:number) {
         return instance.get(`1.0/profile/${userId}`
         )
     },
-}
+    getStatus(userId:number)  {
+        return instance.get(`1.0/profile/status/${userId}`)
+    },
+    updateStatus(status:string)  {
+        return instance.put(`1.0/profile/${status}`, {status:status})
+    }
+
+};
 
 export const authApi = {
     me() {
         return instance.get<AuthFromServerType>(`1.0/auth/me`,
             {
                 headers: {
-                    'API-KEY': '13291219-4788-4555-a4f4-aaeffe0abc09'
+                    'API-KEY': '46af285d-668e-408c-9ee4-63a1ab3ec8c7'
                 },
                 withCredentials: true
             })

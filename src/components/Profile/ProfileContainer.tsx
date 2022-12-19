@@ -2,7 +2,12 @@ import {RootReducerType} from "../../redux/redux-store";
 
 import {Profile} from "./Profile";
 import React from "react";
-import {getProfileThunkCreator, ProfileFromServerType} from "../../redux/profile-reducer";
+import {
+    getProfileThunkCreator,
+    getUserStatusThunkCreator,
+    ProfileFromServerType,
+    updateStatusThunkCreator
+} from "../../redux/profile-reducer";
 import {connect} from "react-redux";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
@@ -17,6 +22,9 @@ type PropsType = {
     profile: ProfileFromServerType | null
     getProfileThunkCreator: (userId: number) => void
     isAuth: boolean
+    getUserStatusThunkCreator:(userId: number) => void
+    status:string
+    updateStatusThunkCreator:(status:string) => void
 };
 
 export class ProfileAPIContainer extends React.Component<CommonPropsType> {
@@ -28,14 +36,16 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
         if (!userId) {
             userId = 2
         }
-        this.props.getProfileThunkCreator(userId)
+        this.props.getProfileThunkCreator(userId);
+        this.props.getUserStatusThunkCreator(userId)
     }
 
     render() {
 
 
         return (
-            <Profile profile={this.props.profile}/>
+            <Profile profile={this.props.profile} status={this.props.status}
+                     updateStatus={this.props.updateStatusThunkCreator}/>
         );
     }
 }
@@ -44,6 +54,7 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
 // let AuthRedirectComponent:any = WithAuthRedirect(ProfileAPIContainer);
 type MapStateToPropsType = {
     profile: ProfileFromServerType | null
+    status:string
 
 
 };
@@ -51,11 +62,12 @@ type MapStateToPropsType = {
 let mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
+        status:state.profilePage.status
 
     }
 }
 
 export const ProfileContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator}),
+    connect(mapStateToProps, {getProfileThunkCreator ,updateStatusThunkCreator, getUserStatusThunkCreator}),
     withRouter,)
 (ProfileAPIContainer)
