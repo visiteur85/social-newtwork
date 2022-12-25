@@ -22,9 +22,9 @@ type PropsType = {
     profile: ProfileFromServerType | null
     getProfileThunkCreator: (userId: number) => void
     isAuth: boolean
-    getUserStatusThunkCreator:(userId: number) => void
-    status:string
-    updateStatusThunkCreator:(status:string) => void
+    getUserStatusThunkCreator: (userId: number) => void
+    status: string
+    updateStatusThunkCreator: (status: string) => void
 };
 
 export class ProfileAPIContainer extends React.Component<CommonPropsType> {
@@ -54,7 +54,7 @@ export class ProfileAPIContainer extends React.Component<CommonPropsType> {
 // let AuthRedirectComponent:any = WithAuthRedirect(ProfileAPIContainer);
 type MapStateToPropsType = {
     profile: ProfileFromServerType | null
-    status:string
+    status: string
 
 
 };
@@ -62,12 +62,12 @@ type MapStateToPropsType = {
 let mapStateToProps = (state: RootReducerType): MapStateToPropsType => {
     return {
         profile: state.profilePage.profile,
-        status:state.profilePage.status
+        status: state.profilePage.status
 
     }
 }
 
 export const ProfileContainer = compose<React.ComponentType>(
-    connect(mapStateToProps, {getProfileThunkCreator ,updateStatusThunkCreator, getUserStatusThunkCreator}),
+    connect(mapStateToProps, {getProfileThunkCreator, updateStatusThunkCreator, getUserStatusThunkCreator}),
     withRouter,)
 (ProfileAPIContainer)

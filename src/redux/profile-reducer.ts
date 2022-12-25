@@ -66,8 +66,8 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             return newState
         }
         case "Set_USER_PROFILE": {
-            let newState = {...state, profile: action.profile}
-            return newState
+            let newState = {...state, profile: action.profile};
+            return newState;
         }
         case "SET-STATUS": {
             return {...state, status: action.status}
@@ -149,7 +149,7 @@ export const updateStatusThunkCreator = (status: string) => {
         profileApi.updateStatus(status)
             .then(response => {
                 if (response.data.resultCode === 0) {
-                    dispatch(setStatusAC(response.data))
+                    dispatch(setStatusAC(status))
                 }
 
             })

@@ -19,7 +19,7 @@ export const ProfileInfo = (props: PropsType) => {
         <div>
 
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.small}/>
+                <img src={props.profile.photos.small} alt={"photo"}/>
                 ava+description</div>
             <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
 
